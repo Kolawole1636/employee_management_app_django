@@ -55,7 +55,7 @@
 
         <h3> Search Employee By Date Created</h3>
 
-        <form>
+        <form action="{% url 'searchbydate' %}" method="post">
             {% csrf_token %}
 
             <div class="mb-3">

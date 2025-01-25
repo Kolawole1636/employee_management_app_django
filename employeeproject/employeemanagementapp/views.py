@@ -68,20 +68,19 @@ def employee(request):
         employee = Employee(firstName=fname, lastName=lname, age=age, email=email, salary=salary,
                              tax=tax, balance=balance, departId=depart)
         employee.save()
-        # dep.size += 1
 
-        #
-        # subject = f'Welcome To SoftCode Company {fname}'
-        # message = f'Your Staff Id is C2024{employee.id} and your salary is ${salary}'
-        # recipient_list = [email]  # Replace with recipient email(s)
-        #
-        # send_mail(
-        #     subject,
-        #     message,
-        #     'rilelaboye@gmail.com',  # From email (matches EMAIL_HOST_USER)
-        #     recipient_list,
-        #     fail_silently=False,  # Raise error if sending fails
-        # )
+
+        subject = f'Welcome To SoftCode Company {fname}'
+        message = f'Your Staff Id is C2024{employee.id} and your salary is ${salary}'
+        recipient_list = [email]  # Replace with recipient email(s)
+
+        send_mail(
+            subject,
+            message,
+            'rilelaboye@gmail.com',  # From email (matches EMAIL_HOST_USER)
+            recipient_list,
+            fail_silently=False,  # Raise error if sending fails
+        )
 
 
         return redirect("employeedetails")
@@ -116,6 +115,21 @@ def searchemployee(request):
         departments = Department.objects.all()
 
         return render(request, 'search.html', {"departs": departments})
+
+
+
+
+def searchbydate(request):
+
+    if request.method == "POST":
+        date1 = request.POST['date1']
+        date2 = request.POST['date2']
+
+        employees = Employee.objects.filter(date_created__range=[date1, date2])
+
+        return render(request, 'search.html', {"employees": employees})
+
+
 
 
 def removeemployee(request, id):
