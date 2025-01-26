@@ -27,6 +27,15 @@
 
   <marquee><h1> Employee Data Page</h1></marquee>
 
+        {% if messages %}
+
+        {% for message in messages %}
+
+        <h5 class="btn btn-success"> {{ message }} </h5>
+
+        {% endfor %}
+
+        {% endif %}
 
 
         <table class="table">
