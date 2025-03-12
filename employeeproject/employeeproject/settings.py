@@ -136,6 +136,14 @@ STATIC_URL = 'static/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
+LOGIN_REDIRECT_URL = 'employeedetails'
+
+LOGIN_URL = 'login'
+
+
+
+
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
@@ -147,6 +155,8 @@ EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'rilelaboye@gmail.com'
 EMAIL_HOST_PASSWORD = 'xrsgbktjzbefprgn'  # app password from the email
+
+
 
 
 

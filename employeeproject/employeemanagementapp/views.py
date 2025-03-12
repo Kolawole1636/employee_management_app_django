@@ -1,8 +1,12 @@
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.mail import send_mail
 
 # Create your views here.
 from .models import Department, Employee
+
+
+# Check if the user is an admin
 
 
 def home(request):
@@ -90,11 +94,16 @@ def employee(request):
 
         return render(request, 'employeeform.html', {"departs": departments})
 
-
+@login_required
 def employeedetails(request):
 
     employees = Employee.objects.all()
-    return render(request, 'employeedata.html', {"employees": employees})
+
+    if request.user.is_staff:  # Prevent user from accessing employee details page
+        return render(request, 'employeedata.html', {"employees": employees})
+
+    return render(request, "noaccess.html", {"user": request.user})
+
 
 
 def searchemployee(request):

@@ -24,22 +24,8 @@
   <div class="row justify-content-center">
     <div class="col-md-6">
 
-        {% load crispy_forms_tags %}
-
-        <h3> Welcome To Registration Page</h3>
-
-
-        <form action="{% url 'register' %}" method="post">
-            {% csrf_token %}
-
-            {{ form|crispy }}
-
-
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form><br>
-
-        <h5>Do you have account already?</h5>
-        <a href="{% url 'login' %}" class="btn btn-info">Login Here</a>
+        <h3>You are now logged out</h3>
+        <a href="{% url 'login' %}" class="btn btn-info">Login Again</a>
 
         <br><br>
 
