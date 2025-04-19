@@ -73,18 +73,22 @@ def employee(request):
                              tax=tax, balance=balance, departId=depart)
         employee.save()
 
+        department = employee.departId
+        department.size = Employee.objects.filter(departId=department).count()
+        department.save()
 
-        subject = f'Welcome To SoftCode Company {fname}'
-        message = f'Your Staff Id is C2024{employee.id} and your salary is ${salary}'
-        recipient_list = [email]  # Replace with recipient email(s)
 
-        send_mail(
-            subject,
-            message,
-            'rilelaboye@gmail.com',  # From email (matches EMAIL_HOST_USER)
-            recipient_list,
-            fail_silently=False,  # Raise error if sending fails
-        )
+        # subject = f'Welcome To SoftCode Company {fname}'
+        # message = f'Your Staff Id is C2024{employee.id} and your salary is ${salary}'
+        # recipient_list = [email]  # Replace with recipient email(s)
+        #
+        # send_mail(
+        #     subject,
+        #     message,
+        #     'rilelaboye@gmail.com',  # From email (matches EMAIL_HOST_USER)
+        #     recipient_list,
+        #     fail_silently=False,  # Raise error if sending fails
+        # )
 
 
         return redirect("employeedetails")
@@ -94,15 +98,19 @@ def employee(request):
 
         return render(request, 'employeeform.html', {"departs": departments})
 
-@login_required
+
+
 def employeedetails(request):
 
     employees = Employee.objects.all()
 
-    if request.user.is_staff:  # Prevent user from accessing employee details page
-        return render(request, 'employeedata.html', {"employees": employees})
+    return render(request, 'employeedata.html', {"employees": employees})
 
-    return render(request, "noaccess.html", {"user": request.user})
+    # if request.user.is_staff:  # Prevent user from accessing employee details page
+    #     return render(request, 'employeedata.html', {"employees": employees})
+    #
+    # return render(request, "noaccess.html", {"user": request.user})
+
 
 
 
@@ -145,7 +153,12 @@ def removeemployee(request, id):
 
     employee = Employee.objects.get(pk=id)
 
+    department = employee.departId
+
     employee.delete()
+
+    department.size = Employee.objects.filter(departId=department).count()
+    department.save()
 
     return redirect("employeedetails")
 
